@@ -1,0 +1,461 @@
+/* App.css */
+
+/* ====== Base page look (keep exactly the same vibe) ====== */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(to right, #ffe4ec, #fff5f8);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding-top: 40px;
+}
+
+/* Backward compatible with old UI + used by new UI too */
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* New wrapper used by the multi-page UI (safe even if unused) */
+.page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* ====== Card ====== */
+.login-box {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  width: 420px; /* keep old look by default */
+  max-width: 92vw;
+  border: 1px solid #ffc5d8;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Make the same card become “wide” only when dashboard/project content exists */
+.login-box:has(.dashboard-root),
+.login-box:has(.file-section),
+.login-box:has(.project-top) {
+  width: min(980px, 92vw);
+}
+
+/* ====== Titles ====== */
+h2 {
+  text-align: center;
+  color: #ff3e7f;
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.title {
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #555;
+  font-size: 13px;
+  margin: 0 0 16px;
+}
+
+/* ====== Inputs / Labels ====== */
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+input[type="text"],
+input[type="file"],
+select,
+.input,
+.dropdown,
+.file-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-top: 5px;
+  transition: 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.input.small {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+input:focus,
+select:focus,
+.input:focus,
+.dropdown:focus,
+.file-input:focus {
+  border-color: #ff3e7f;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 62, 127, 0.3);
+}
+
+/* ====== Buttons (keep old behavior, add overrides for new layout) ====== */
+button {
+  background: #ff3e7f;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #e73370;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* new UI uses these helper classes too */
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn.full {
+  width: 100%;
+}
+
+.btn.secondary {
+  background: #fff;
+  color: #ff3e7f;
+  border: 1px solid #ffc5d8;
+}
+
+.btn.secondary:hover {
+  background: #ffeef4;
+}
+
+.btn.tiny {
+  width: auto;
+  padding: 8px 10px;
+  font-size: 12px;
+  margin-top: 0;
+}
+
+.btn.danger,
+.danger {
+  background: #e53935;
+}
+
+.btn.danger:hover,
+.danger:hover {
+  background: #c62828;
+}
+
+/* ====== Status / Errors ====== */
+.success,
+.status {
+  margin-top: 15px;
+  color: green;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.error {
+  margin-top: 15px;
+  color: red;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* ====== OLD one-page lists (still supported) ====== */
+.file-list {
+  margin-top: 30px;
+  background: #ffeef4;
+  border: 1px solid #fcb2cb;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.file-list h4 {
+  color: #e91e63;
+  font-size: 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-list .file-count {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.file-list ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.file-list li {
+  background: #fff;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  transition: background 0.2s ease;
+  gap: 10px;
+}
+
+.file-list li:hover {
+  background: #ffe6ef;
+}
+
+.file-list .tag {
+  background: #ffc2d9;
+  color: #c2185b;
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+/* make delete buttons inside old list not break layout */
+.file-list li button {
+  width: auto;
+  margin-top: 0;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+/* ====== NEW Dashboard UI ====== */
+.dashboard-root {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ffe1ec;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-actions button {
+  width: auto;
+  margin-top: 0;
+}
+
+.dashboard-body {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 14px;
+}
+
+.sidebar {
+  background: #fff7fa;
+  border: 1px solid #ffd2e2;
+  border-radius: 12px;
+  padding: 12px;
+  height: fit-content;
+}
+
+.sidebar button {
+  margin-top: 8px;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.tile {
+  width: auto; /* override global button width */
+  margin-top: 0;
+  padding: 14px 12px;
+  text-align: left;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #ffd2e2;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  color: #333;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.2s ease;
+}
+
+.tile:hover {
+  background: #fff1f6;
+  transform: translateY(-1px);
+}
+
+.tile-name {
+  font-weight: 700;
+  color: #ff3e7f;
+  font-size: 14px;
+}
+
+.empty-state {
+  padding: 16px;
+  background: #fff7fa;
+  border: 1px dashed #ffd2e2;
+  border-radius: 12px;
+  color: #666;
+}
+
+/* ====== NEW Project screen ====== */
+.project-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #ffe1ec;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.project-top button {
+  width: auto;
+  margin-top: 0;
+}
+
+.project-meta {
+  color: #555;
+  font-size: 13px;
+}
+
+/* swimlane */
+.file-section {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 860px) {
+  .dashboard-body {
+    grid-template-columns: 1fr;
+  }
+  .file-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+.file-box {
+  background: #ffeef4;
+  border: 1px solid #fcb2cb;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.file-box h4 {
+  margin: 0 0 10px;
+  color: #e91e63;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+
+.file-name {
+  font-size: 13px;
+  color: #333;
+  word-break: break-all;
+}
+
+.file-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-actions button {
+  width: auto;
+}
+
+/* viewer */
+.viewer {
+  margin-top: 16px;
+  background: #fff;
+  border: 1px solid #ffd2e2;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.viewer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #fff7fa;
+  border-bottom: 1px solid #ffd2e2;
+}
+
+.viewer-title {
+  font-weight: 700;
+  color: #ff3e7f;
+  font-size: 13px;
+}
+
+.viewer-head button {
+  width: auto;
+  margin-top: 0;
+}
+
+.viewer-pre {
+  margin: 0;
+  padding: 12px;
+  font-size: 12px;
+  color: #222;
+  max-height: 320px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

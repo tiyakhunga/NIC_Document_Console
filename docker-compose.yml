@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: ts-project-server
+    restart: unless-stopped
+    environment:
+      PORT: 5000
+      DB_JSON_PATH: /app/state/db.json
+      UPLOADS_JSON_PATH: /app/state/uploads.json
+      TRANSFORMERS_CACHE: /app/.cache/transformers
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./state:/app/state
+      - ./uploads:/app/uploads
+      - ./markers:/app/markers
+      - ./embeds:/app/embeds
+      - ./outputs:/app/outputs
+      - ./.cache:/app/.cache
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: ts-project-client
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "80:80"
